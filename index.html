@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>%TITLE%</title>
+    <meta name="description" content="%DESCRIPTION%" />
+    <meta property="og:title" content="%TITLE%" />
+    <meta property="og:description" content="%DESCRIPTION%" />
+    <meta name="theme-color" content="#05070d" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      // Decide before first paint, so the flat page never flashes on 3D visits.
+      (function () {
+        var hash = location.hash;
+        var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var gl = null;
+        try { gl = document.createElement('canvas').getContext('webgl2'); } catch (e) {}
+        if (gl) {
+          var lose = gl.getExtension('WEBGL_lose_context');
+          if (lose) lose.loseContext();
+        }
+        if (gl && (hash === '#/fly' || (!calm && hash !== '#/flat'))) {
+          document.documentElement.classList.add('fly');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <main id="flat"><!--flat--></main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
